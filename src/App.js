@@ -70,6 +70,11 @@ const App = (props) => {
             <Route path="movies" element={<MovieList movies={movies} />} />
 
             <Route path="/" element={<Navigate to="/movies" />} />
+
+            <Route
+              path="/movies/add"
+              element={<EditMovieForm setMovies={setMovies} />}
+            />
           </Routes>
         </div>
       </div>

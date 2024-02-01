@@ -26,21 +26,36 @@ const EditMovieForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (id === undefined) {
+      // ADD MOVIE
+      axios
+        .post("http://localhost:9000/api/movies", movie)
+        .then((res) => {
+          setMovies(res.data);
+          navigate("/movies");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      // EDIT MOVIE
+      axios
+        .put(`http://localhost:9000/api/movies/${id}`, movie)
+        .then((res) => {
+          setMovies(res.data);
+          navigate(`/movies/${id}`);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
     // Make your put request here
     // On success, set the updated movies in state
     // and also navigate the app to the updated movie path
-    axios
-      .put(`http://localhost:9000/api/movies/${id}`, movie)
-      .then((res) => {
-        setMovies(res.data);
-        navigate(`/movies/${id}`);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
   };
 
   useEffect(() => {
+    if (id === undefined) return;
     axios
       .get(`http://localhost:9000/api/movies/${id}`)
       .then((res) => {
