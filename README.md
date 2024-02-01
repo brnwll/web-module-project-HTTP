@@ -57,13 +57,13 @@ You should now have your app running in Chrome on `http://localhost:3000`
 
 > _You added in a CRUD feature! Good job! Now let's get deleted squared away..._
 
-- [ ] Identify the component that holds the button needed for deletion.
+- [x] Identify the component that holds the button needed for deletion.
 
-- [ ] In `App.js` complete the `deleteMovie` function, which requests the deletion to the server by movie id, and updates the movies list.
+- [x] In `App.js` complete the `deleteMovie` function, which requests the deletion to the server by movie id, and updates the movies list.
 
-- [ ] Pass down `deleteMovie` into the appropriate component and wire it to a click handler.
+- [x] Pass down `deleteMovie` into the appropriate component and wire it to a click handler.
 
-- [ ] When your delete request is complete redirect the user to the `/movies` route.
+- [x] When your delete request is complete redirect the user to the `/movies` route.
 
 #### Adding a Movie
 
