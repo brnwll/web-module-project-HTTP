@@ -4,10 +4,14 @@ import { Link } from "react-router-dom";
 
 import axios from "axios";
 
+// Add and edit functionality are combined here.
+// If this we more than a simple learning project,
+// we would likely want to separate these into two
+// separate components that both utilize a MovieForm component
+
 const EditMovieForm = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const { setMovies } = props;
   const [movie, setMovie] = useState({
     title: "",
@@ -27,32 +31,37 @@ const EditMovieForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id === undefined) {
-      // ADD MOVIE
-      axios
-        .post("http://localhost:9000/api/movies", movie)
-        .then((res) => {
-          setMovies(res.data);
-          navigate("/movies");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      addMovie();
     } else {
-      // EDIT MOVIE
-      axios
-        .put(`http://localhost:9000/api/movies/${id}`, movie)
-        .then((res) => {
-          setMovies(res.data);
-          navigate(`/movies/${id}`);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      editMovie();
     }
-    // Make your put request here
-    // On success, set the updated movies in state
-    // and also navigate the app to the updated movie path
   };
+
+  const addMovie = () => {
+    axios
+      .post("http://localhost:9000/api/movies", movie)
+      .then((res) => {
+        setMovies(res.data);
+        navigate("/movies");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const editMovie = () => {
+    axios
+      .put(`http://localhost:9000/api/movies/${id}`, movie)
+      .then((res) => {
+        setMovies(res.data);
+        navigate(`/movies/${id}`);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const cancelUrl = () => (id === undefined ? "/movies" : `/movies/${id}`);
 
   useEffect(() => {
     if (id === undefined) return;
@@ -130,7 +139,7 @@ const EditMovieForm = (props) => {
           </div>
           <div className="modal-footer">
             <input type="submit" className="btn btn-info" value="Save" />
-            <Link to={`/movies/${id}`}>
+            <Link to={cancelUrl()}>
               <input type="button" className="btn btn-default" value="Cancel" />
             </Link>
           </div>
